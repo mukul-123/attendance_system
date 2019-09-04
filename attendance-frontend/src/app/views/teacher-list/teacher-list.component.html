@@ -1,0 +1,38 @@
+<app-admin-header></app-admin-header>
+<div class="container">
+    <button style="float:right" routerLink="/admin/addTeacher" class="btn btn-primary">Add Teacher</button><br>
+  <div *ngIf="teachers.data?.length>0"> 
+
+    <h2 style="text-align: center">List of Teachers</h2>
+<table class="table">
+  <thead>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Qualification</th>
+    <th>Age</th>
+    <th>Class Teacher</th>
+    <th>Image</th>
+    <th>Created on</th>
+    <th>Action</th>
+  </thead>
+  <tbody>
+<tr *ngFor="let teacher of teachers.data  | paginate : config">
+  <td>{{teacher.name}}</td>
+  <td>{{teacher.email}}</td>
+  <td>{{teacher.qualification}}</td>
+  <td>{{teacher.age}}</td>
+  <td>{{teacher.class.name|uppercase}}</td>
+  <td>{{teacher.address}}</td>
+  <td>{{teacher.created_at|date:'short'}}</td>
+  <td><button class="btn btn-danger" (click)="removeTeacher(teacher.id)">Remove</button></td>
+</tr>
+  </tbody>
+</table>
+<pagination-controls (pageChange)="getAllTeachers($event)" class="my-pagination"></pagination-controls>
+</div>
+
+<div *ngIf="teachers.data?.length==0">
+    <h2 style="text-align: center">No Teacher Found</h2>
+</div>
+
+</div>

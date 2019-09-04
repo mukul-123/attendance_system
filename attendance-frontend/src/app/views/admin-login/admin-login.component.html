@@ -1,0 +1,26 @@
+<form name="admin_login" (ngSubmit)='admin_form.form.valid && adminLogin()' #admin_form="ngForm">
+  <div class="container"> 
+      <h3 id="heading1">Admin Login</h3>
+      <div class="form-container">
+          <div class="form-group"> 
+              <label>Email</label>
+              <input type='email' name='email' class="form-control" placeholder="Enter email" [(ngModel)]='adminModel.email' #email="ngModel" style=width:300px required email>
+          <div *ngIf="admin_form.submitted && email.invalid">
+              <div class="errors" *ngIf="email.errors.required">Email is required</div>
+              <div *ngIf="email.errors.email" class="errors">Please enter a valid email</div>
+          </div>
+            </div>
+      <div class="form-group">
+          <label>Password</label>
+          <input type="password" name="password" class="form-control" placeholder="Enter Password" [(ngModel)]='adminModel.password' #password="ngModel" style=width:300px required minlength=6>
+          <div *ngIf="admin_form.submitted && password.invalid">
+              <div class="errors" *ngIf="password.errors.required">Password is required</div>
+              <div class="errors" *ngIf="password.errors.minlength">Password should be atleast 6 characters</div>
+          </div>
+        </div>
+        
+          <button type="submit" class="btn btn-primary" style="align-self: center;">Login</button>
+      </div>
+  </div>
+  <ng4-loading-spinner> </ng4-loading-spinner>
+</form>

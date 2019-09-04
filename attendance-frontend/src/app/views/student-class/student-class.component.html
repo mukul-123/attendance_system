@@ -1,0 +1,55 @@
+<app-admin-header></app-admin-header>
+<div *ngIf="students.data?.length>0">
+    <h2 style="text-align: center">List Of Students in {{grade}} class</h2>
+<table class="table">
+  <thead>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Address</th>
+    <th>Father Name</th>
+    <th>Number</th>
+    <th>Parents Number</th>
+    <th>Created On</th>
+    <th>Status</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let student of students.data | paginate : config">
+        <td>{{student.name}}</td>
+        <td>{{student.email}}</td>
+        <td>{{student.address}}</td>
+        <td>{{student.father_name}}</td>
+        <td>{{student.number}}</td>
+        <td>{{student.parents_number}}</td>
+        <td>{{student.created_at | date:'short'}}</td>
+        <td *ngIf="isVerify then verify else loading"></td>
+
+        <ng-template #loading>
+          <td *ngIf="student.verify==0" #lblName id="lblName"><button class="btn btn-danger"
+             (click)="changeHtml(student.id)"> Unverified</button></td>
+             <td *ngIf="student.verify==1"><button class="btn btn-success">Verified</button></td>
+        </ng-template>
+
+          <ng-template #verify>
+           <td>
+             <form name="verify_form" #verify_form="ngForm" (ngSubmit)='verify_form.form.valid && verifyStudent(student.id)'>
+       <input type='text' name='code' class='form-control' #code='ngModel' [(ngModel)]='verify_code' placeholder='Enter code' required><br>
+       <div *ngIf="verify_form.submitted && code.invalid">
+         <div class="errors" *ngIf="code.errors.required">Please enter verification code</div>
+      </div>
+       <button type="submit" class='btn btn-primary'>Verify</button>&nbsp;&nbsp;
+
+       <button (click)='cancelVerify()' class='btn btn-danger'>Cancel</button>
+      </form>
+
+        </td>
+          </ng-template>
+    </tr>
+  
+  </tbody>
+</table>
+<pagination-controls (pageChange)="pageChange($event)" class="my-pagination"></pagination-controls>
+</div>
+
+<div *ngIf="students.data?.length===0">
+  <h2 style="text-align: center">No student found in {{grade}} class</h2>
+</div>

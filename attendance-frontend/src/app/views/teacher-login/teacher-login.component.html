@@ -1,0 +1,27 @@
+<form name="teacher_login" (ngSubmit)='teacher_form.form.valid && teacherLogin()' #teacher_form="ngForm">
+    <div class="container"> 
+        <h3 id="heading1">Teacher Login</h3>
+        <div class="form-container">
+            <div class="form-group"> 
+                <label>Email</label>
+                <input type='email' name='email' class="form-control" placeholder="Enter email" [(ngModel)]='teacherModel.email' #email="ngModel" style=width:300px required email>
+            <div *ngIf="teacher_form.submitted && email.invalid">
+                <div class="errors" *ngIf="email.errors.required">Email is required</div>
+                <div *ngIf="email.errors.email" class="errors">Please enter a valid email</div>
+            </div>
+              </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" name="password" class="form-control" placeholder="Enter Password" [(ngModel)]='teacherModel.password' #password="ngModel" style=width:300px required>
+            <div *ngIf="teacher_form.submitted && password.invalid">
+                <div class="errors" *ngIf="password.errors.required">Password is required</div>
+            </div>
+          </div>
+          
+            <button type="submit" class="btn btn-primary" style="align-self: center;">Login</button>
+        </div>
+    </div>
+    <ng4-loading-spinner> </ng4-loading-spinner>
+
+  </form>
+  

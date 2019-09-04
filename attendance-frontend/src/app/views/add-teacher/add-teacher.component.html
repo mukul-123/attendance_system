@@ -1,0 +1,140 @@
+<app-admin-header></app-admin-header>
+
+<div class="container">
+    <form name="teacher_registration" (ngSubmit)='teacher_registration.form.valid && teacherRegister()' #teacher_registration="ngForm">
+
+        <h2>Teacher Registration Page</h2>
+        <div class="row">
+          <div class="col-md-6">
+              <small style="color:red">*</small>&nbsp;
+              <label>Name</label>        
+          </div>
+          <div class="col-md-3 col-md-offset-4">
+              <input type="text"  name="teach_name" class="form-control" #teach_name="ngModel" [(ngModel)]="teacher.name" placeholder="Enter teacher name" pattern="[a-zA-Z\s]+" required maxlength=30>
+              <div *ngIf="teacher_registration.submitted && teach_name.invalid">
+                  <div class="errors" *ngIf="teach_name.errors.required">Please enter the name</div>
+                  <div class="errors" *ngIf="teach_name.errors.pattern">It must only  contain string</div>
+              </div>
+          </div>
+        </div>
+        <br>
+
+        <div class="row">
+        <div class="col-md-6">
+            <small style="color:red">*</small>&nbsp;&nbsp;
+            <label>Email</label>
+        </div>
+        <div class="col-md-3 col-md-offset-6">
+            <input type="email" class="form-control" name="teach_email" #teach_email="ngModel" [(ngModel)]="teacher.email" placeholder="Please enter email" required email maxlength=30>
+            <div *ngIf="teacher_registration.submitted && teach_email.invalid">
+                <div class="errors" *ngIf="teach_email.errors.required">Please enter the email</div>
+                <div class="errors" *ngIf="teach_email.errors.email">Please enter a valid email address</div>
+            </div>
+</div>
+</div><br>
+
+<div class="row">
+    <div class="col-md-6">
+        <small style="color:red">*</small>&nbsp;&nbsp;
+        <label>Password</label>
+    </div>
+    <div class="col-md-3 col-md-offset-6">
+        <input type="password" class="form-control" name="teach_pwd" #teach_pwd="ngModel" [(ngModel)]="teacher.password" placeholder="Please enter password" required minlength=6>
+        <div *ngIf="teacher_registration.submitted && teach_pwd.invalid">
+            <div class="errors" *ngIf="teach_pwd.errors.required">Please enter the password</div>
+            <div class="errors" *ngIf="teach_pwd.errors.minlength">Password length must be minimum 6 characters</div>
+        </div>
+</div>
+</div><br>
+
+<div class="row">
+    <div class="col-md-6">
+        <small style="color:red">*</small>&nbsp;&nbsp;
+        <label>Confirm Password</label>
+    </div>
+    <div class="col-md-3 col-md-offset-6">
+        <input type="password" class="form-control" name="con_pwd" #con_pwd="ngModel" [(ngModel)]="teacher.con_pwd" placeholder="Please confirm the password" required minlength=6>
+        <div *ngIf="teacher_registration.submitted && con_pwd.invalid">
+            <div class="errors" *ngIf="con_pwd.errors.required">Please enter the password</div>
+            <div class="errors" *ngIf="con_pwd.errors.minlength">Password length must be minimum 6 characters</div>
+        </div>
+</div>
+</div><br>
+
+<div class="row">
+    <div class="col-md-6">
+        <small style="color:red">*</small>&nbsp;&nbsp;
+        <label>Qualification</label>
+    </div>
+    <div class="col-md-3 col-md-offset-6">
+        <input type="text" class="form-control" name="teach_qualification" #teach_qualification="ngModel" [(ngModel)]="teacher.qualification" placeholder="Please enter the qualification" required>
+        <div *ngIf="teacher_registration.submitted && teach_qualification.invalid">
+            <div class="errors" *ngIf="teach_qualification.errors.required">Please enter the qualification</div>
+        </div>
+</div>
+</div><br>
+
+<div class="row">
+    <div class="col-md-6">
+        <small style="color:red">*</small>&nbsp;&nbsp;
+        <label>Age</label>
+    </div>
+    <div class="col-md-3 col-md-offset-6">
+        <input type="number" class="form-control" name="teach_age" #teach_age="ngModel" [(ngModel)]="teacher.age" placeholder="Please enter the age" required>
+        <div *ngIf="teacher_registration.submitted && teach_age.invalid">
+            <div class="errors" *ngIf="teach_age.errors.required">Please enter the age.</div>
+        </div>
+</div>
+</div><br>
+
+<div class="row">
+    <div class="col-md-6">
+        <small style="color:red">*</small>&nbsp;&nbsp;
+        <label>Address</label>
+    </div>
+    <div class="col-md-3 col-md-offset-6">
+        <input type="text" class="form-control" name="address" #address="ngModel" [(ngModel)]="teacher.address" pattern="[a-zA-Z\s]+" placeholder="Please enter the address" required >
+        <div *ngIf="teacher_registration.submitted && address.invalid">
+            <div class="errors" *ngIf="address.errors.required">Please enter the address.</div>
+            <div class="errors" *ngIf="address.errors.pattern">It must contain string.</div>
+        </div>
+</div>
+</div><br>
+
+<div class="row">
+    <div class="col-md-6">
+        <small style="color:red">*</small>&nbsp;&nbsp;
+        <label>Mobile Number</label>
+    </div>
+    <div class="col-md-3 col-md-offset-6">
+        <input type="number" class="form-control" name="mob_no" #mob_no="ngModel" [(ngModel)]="teacher.mob_no" required >
+        <div *ngIf="teacher_registration.submitted && mob_no.invalid">
+            <div class="errors" *ngIf="mob_no.errors.required">Please enter the mobile number.</div>
+        </div>
+</div>
+</div><br>
+
+<div class="row">
+    <div class="col-md-6">
+        <small style="color:red">*</small>&nbsp;&nbsp;
+        <label>Class</label>
+    </div>
+    <div class="col-md-3 col-md-offset-6">
+      <select name="class" class="form-control" #class="ngModel" [(ngModel)]="teacher.class" required>
+        <option *ngFor="let grade of grades.class" value={{grade.id}}>{{grade.name | uppercase}}</option>
+      </select>
+        <div *ngIf="teacher_registration.submitted && class.invalid">
+            <div class="errors" *ngIf="class.errors.required">Please select the class.</div>
+        </div>
+</div>
+</div><br>
+
+
+
+        <button  type="submit" class="btn btn-success">Add</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button type="button" class="btn btn-danger" (click)="teacher_registration.reset()">Cancel</button>
+      </form>
+
+      <ng4-loading-spinner> </ng4-loading-spinner>
+
+</div>

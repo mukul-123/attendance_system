@@ -1,0 +1,14 @@
+
+<div class="header">
+  <a class="logo">{{user.name | uppercase}}</a>
+  <div class="header-right">
+    <a class="active" (click)="logout()">Logout</a>
+    <a routerLink="/admin/attendance">Attendance</a>
+    <a routerLink="/admin/teachers">Teacher</a>
+    <a routerLink="/admin/class">Class</a>
+    <a routerLink="/admin/student">Student</a>
+    <a routerLink="/admin/profile">Profile</a>
+    <a routerLink="/admin/dashboard">Home</a>
+
+  </div>
+</div>

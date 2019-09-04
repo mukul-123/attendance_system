@@ -1,0 +1,41 @@
+<app-admin-header></app-admin-header>
+<div class="container">
+  <h2 style="text-align:center"><b>{{method}}</b></h2>
+      <div class="col-md-3 col-md-offset-6">
+          <select style="text-align:center" class="form-control" (change)="classChange(1,$event)" required>
+            <option value=0>Select the class</option>
+          <option *ngFor="let class of classes"  value={{class.id}}>{{class.name|uppercase}}</option>
+          </select>
+          </div>
+
+
+<div *ngIf="attendances.data?.length>0">
+    <button style="float:right" class="btn btn-primary" (click)="giveAttendance()">Attendance</button>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Class</th>
+        <th>Attendance</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let attendance of attendances.data | paginate : config">
+        <td>{{attendance.id}}</td>
+        <td>{{attendance.name}}</td>
+        <td>{{attendance.email}}</td>
+        <td>{{attendance.class?.name|uppercase}}</td>
+        <td>{{attendance.attendance_count}}%</td>
+      </tr>
+    </tbody>
+  </table>
+  <pagination-controls (pageChange)="classChange($event,'')" class="my-pagination"></pagination-controls>
+
+</div>
+
+<div>
+  <h2 *ngIf="attendances.data?.length==0" style="text-align:center">No Student Found</h2>
+</div>
+</div>

@@ -1,0 +1,14 @@
+.container{ 
+    width:500px; 
+    height:300px;
+    margin-top: 200px;
+    
+}
+.form-container{
+    background-color: grey
+}
+#heading1{
+    color:black;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    align-content: center;
+}

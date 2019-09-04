@@ -1,0 +1,118 @@
+<app-admin-header></app-admin-header>
+<div class="container">
+
+  <form name="student_registration" (ngSubmit)='student_registration.form.valid && studentRegister()' #student_registration="ngForm">
+
+        <h2>Student Registration Page</h2>
+        <div class="row">
+          <div class="col-md-6">
+              <small style="color:red">*</small>&nbsp;
+              <label>Student Name</label>        
+          </div>
+          <div class="col-md-3 col-md-offset-4">
+              <input type="text"  name="stu_name" class="form-control" #stu_name="ngModel" [(ngModel)]="student.name" placeholder="Enter student name" pattern="[a-zA-Z\s]+" required maxlength=30>
+              <div *ngIf="student_registration.submitted && stu_name.invalid">
+                  <div class="errors" *ngIf="stu_name.errors.required">Please enter student name</div>
+                  <div class="errors" *ngIf="stu_name.errors.pattern">It must only  contain string</div>
+              </div>
+          </div>
+        </div>
+        <br>
+
+        <div class="row">
+        <div class="col-md-6">
+            <small style="color:red">*</small>&nbsp;&nbsp;
+            <label>Father Name</label>
+        </div>
+        <div class="col-md-3 col-md-offset-6">
+            <input type="text" class="form-control" name="fath_name" #fath_name="ngModel" [(ngModel)]="student.fath_name" placeholder="Enter father name" pattern="[a-zA-Z\s]+" required maxlength=30>
+            <div *ngIf="student_registration.submitted && fath_name.invalid">
+                <div class="errors" *ngIf="fath_name.errors.required">Please enter student father name</div>
+                <div class="errors" *ngIf="fath_name.errors.pattern">It must only  contain string</div>
+
+            </div>
+</div>
+</div><br>
+
+        <div class="row">
+            <div class="col-md-6">
+                <small style="color:red">*</small>&nbsp;&nbsp;
+                <label>Email</label>   
+</div>
+<div class="col-md-3 col-md-offset-6">
+    <input type="email" class="form-control" name="email" #email="ngModel" [(ngModel)]="student.email" placeholder="Enter email" required email>
+    <div *ngIf="student_registration.submitted && email.invalid">
+        <div class="errors" *ngIf="email.errors.required">Please enter student email</div>
+        <div class="errors" *ngIf="email.errors.email">Please enter a valid email</div>
+    </div>
+</div>
+        </div><br>
+
+        <div class="row">
+            <div class="col-md-6">
+                <label>Mobile Number</label>        
+</div>
+<div class="col-md-3 col-md-offset-6">
+    <input type="text" class="form-control" name="mob_number" #mob_number="ngModel" [(ngModel)]="student.mob_number" placeholder="Enter mobile number" maxlength="10" minlength="10">
+    <div *ngIf="student_registration.submitted && mob_number.invalid">
+        <div class="errors" *ngIf="mob_number.errors.minlength">Invalid mobile number</div>
+    </div>
+</div>
+
+</div>
+<br>
+
+<div class="row">
+    <div class="col-md-6">
+        <small style="color:red">*</small>&nbsp;&nbsp;
+        <label>Parents Number</label> 
+</div>
+<div class="col-md-3 col-md-offset-6">
+    <input type="text" class="form-control" name="fath_number" #fath_number="ngModel" [(ngModel)]="student.fath_number" placeholder="Enter parents mobile number" required maxlength=10 minlength="10">
+    <div *ngIf="student_registration.submitted && fath_number.invalid">
+        <div class="errors" *ngIf="fath_number.errors.required">Please enter student father number</div>
+        <div class="errors" *ngIf="fath_number.errors?.minlength">Invalid mobile number</div>
+    </div>
+</div>
+<div class="col-md-3 col-md-offset-6" *ngIf="fath_number.touched && student.mob_number===student.fath_number">
+    <div class="errors">Student number and father number should not be same</div>
+</div>
+</div><br>
+           
+<div class="row">
+    <div class="col-md-6">
+        <small style="color:red">*</small>&nbsp;&nbsp;
+        <label>Address</label> 
+      </div>
+      <div class="col-md-3 col-md-offset-6">
+          <input type="text" class="form-control" name="address" #address="ngModel" [(ngModel)]="student.address" pattern="[a-zA-Z\s]+" placeholder="Enter address" required>  
+        <div *ngIf="student_registration.submitted && address.invalid">
+            <div class="errors" *ngIf="address.errors.required">Please enter Student address</div>
+            <div class="errors" *ngIf="address.errors.pattern">It must only  contain string</div>
+        </div>
+</div>
+</div><br>
+
+<div class="row">
+    <div class="col-md-6">
+        <small style="color:red">*</small>&nbsp;&nbsp;
+        <label>Class</label>  
+</div>
+<div class="col-md-3 col-md-offset-6">
+    <select class="form-control" name="class" #class="ngModel" [(ngModel)]="student.class" required>
+        <option *ngFor="let record of classes" value={{record.id}}>{{record.name}}</option>
+      </select>   
+      <div *ngIf="student_registration.submitted && class.invalid">
+          <div class="errors" *ngIf="class.errors.required">Please select the class</div>
+      </div>
+</div>
+</div>
+        <br>
+
+        <button  type="submit" class="btn btn-success">Add</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button type="button" class="btn btn-danger" (click)="student_registration.reset()">Cancel</button>
+        <ng4-loading-spinner> </ng4-loading-spinner>
+
+      </form>
+
+</div>

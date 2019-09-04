@@ -1,0 +1,29 @@
+<app-admin-header></app-admin-header>
+<div class="container">
+  <button style="float:right" class="btn btn-primary" (click)="addClass()">Add class</button>
+  <div *ngIf="class.data?.length>0">
+      <h2 style="text-align:center">List of all the classes</h2>
+  <table class="table">
+    <thead>
+      <th>Name</th>
+      <th>Students</th>
+      <th>Created On</th>
+      <th>Action</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let records of class.data | paginate : config">
+          <td>{{records.name|uppercase}}</td>
+          <td>{{records.students_count}}</td>
+          <td>{{records.created_at | date:'short'}}</td>
+          <td><button class="btn btn-danger" (click)="removeClass(records.id)">Remove</button>
+            &nbsp;&nbsp; <button class="btn btn-success" (click)="viewStudents(records.id,1)">View</button></td>
+      </tr>
+    
+    </tbody>
+  </table>
+  <pagination-controls (pageChange)="getClasses($event)" class="my-pagination"></pagination-controls>
+</div>
+<div *ngIf="class.data?.length==0">
+<h2 style="text-align:center">No class Found Please add the class</h2>
+</div>
+</div>

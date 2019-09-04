@@ -1,0 +1,43 @@
+
+  <div class="modal-body">
+      <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      <form name="class_form" (ngSubmit)="class_form.form.valid && addClass()" #class_form="ngForm">
+        <div class="form-group">
+            <h4 class="modal-title" id="modal-basic-title">Add new Class</h4><br>
+          <div class="row">
+            <div class="col-md-2">
+              <label>Class</label>
+            </div>
+            <div class="col-md-12">
+              <input type="text" class="form-control" style="width:200px" name="class_name" #class_name="ngModel" [(ngModel)]="class.class_name" placeholder="Enter class name" required>
+            <div *ngIf="class_form.submitted && class_form.invalid">
+                <div class="errors" *ngIf="class_name.errors.required">Please enter class name</div>
+            </div>
+            </div>
+          </div><br>
+          <div class="row">
+            <div class="col-md-12">
+              <input type="checkbox" name="div_sec" [(ngModel)]="class.check">&nbsp;
+                <span>Do you want to divide the class into section</span>
+            </div>
+          </div>
+          <div *ngIf="class.check">
+
+              <ng-multiselect-dropdown
+              [placeholder]="'Please select the class section'"
+              [data]="dropdownList"
+              [(ngModel)]="class.section"
+              name="section"
+              [settings]="dropdownSettings"
+            >
+            </ng-multiselect-dropdown>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-success">Add Class</button>
+        <ng4-loading-spinner> </ng4-loading-spinner>
+
+      </form>
+    </div>
+  

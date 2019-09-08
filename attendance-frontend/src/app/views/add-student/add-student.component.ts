@@ -26,11 +26,11 @@ export class AddStudentComponent implements OnInit {
     .subscribe(res=>{
       if(res.status===200){
           this.spinnerService.hideSpinner();
-          this.spinnerService.successSwal(res.message);     
+          this.spinnerService.successSwal(res);    
+           this.form.reset();
       }
     },error=>{
-      console.log(error.message);
-      // this.spinnerService.errorSwal(error.message);
+      this.spinnerService.errorSwal(error);
     });
   }
 

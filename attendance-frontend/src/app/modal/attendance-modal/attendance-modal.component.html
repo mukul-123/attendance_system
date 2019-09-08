@@ -3,7 +3,7 @@
       <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
           <span aria-hidden="true">&times;</span>
         </button>
-      <form name="attendance_form" (ngSubmit)="attendance_form.form.valid && attendance()" #attendance_form="ngForm">
+      <form name="attendance_form" (ngSubmit)="attendance_form.form.valid && studentAttendance()" #attendance_form="ngForm">
         <div class="form-group">
             <h4 class="modal-title" id="modal-basic-title">Attendance</h4><br>
         </div>
@@ -16,19 +16,22 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let student of students">
+            <tr *ngFor="let student of students let i=index">
               <td>{{student.id}}</td>
               <td>{{student.name}}</td>
               <td>
-                <input type="radio" name="attendance_val_{{student.id}}" value="1" data-id={{student.id}} ([ngModel])="attendance_val">
+                <input type="radio" name={{i}} data-id={{student.id}} [value]=1 [(ngModel)]=attendance[i] required>
                 <label>Present</label>
-                <input type="radio" name="attendance_val_{{student.id}}" value="0" data-id={{student.id}} ([ngModel])="attendance_val">
+                <input type="radio" name={{i}} data-id={{student.id}} [value]=0 [(ngModel)]=attendance[i] required>
                 <label>Absent</label>
               </td>
             </tr>
           </tbody>
         </table>
-        <button type="submit" class="btn btn-success" (click)="studentAttendance()">Submit</button>
+        <span *ngIf="attendance_form.submitted && attendance_form.form.invalid">
+          <span class="errors">Please select all the attendance.</span>
+        </span>
+        <button type="submit" class="btn btn-success">Submit</button>
         <ng4-loading-spinner> </ng4-loading-spinner>
 
       </form>

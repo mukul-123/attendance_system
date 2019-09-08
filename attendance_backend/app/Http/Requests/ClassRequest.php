@@ -30,6 +30,15 @@ class ClassRequest extends FormRequest
         ];
     }
 
+
+    public function messages()
+    {
+        return [
+            'class.required'=>'Class is required',
+            'class.exists'=>'This class does not exist.',
+        ];
+    }
+
     public function failedValidation(Validator $validator) {
         $errors=$validator->errors()->toArray();
         foreach($errors as $error){

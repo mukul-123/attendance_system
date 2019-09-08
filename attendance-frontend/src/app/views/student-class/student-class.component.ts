@@ -80,7 +80,7 @@ export class StudentClassComponent implements OnInit {
         this.spinnerService.errorSwal(res);
       }
     },error=>{
-      this.spinnerService.errorSwal(error);
+      this.spinnerService.errorSwal(error.error);
     })
   }
 }

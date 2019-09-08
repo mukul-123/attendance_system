@@ -24,6 +24,7 @@ class Attendance extends Migration
         Schema::table('attendance',function(Blueprint $table){
             $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
             $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('cascade');
+            $table->foreign('grade_id')->references('id')->on('grade')->onDelete('cascade');
         }); 
         }
 

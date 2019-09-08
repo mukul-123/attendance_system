@@ -51,13 +51,17 @@ Route::group(['middleware'=>'auth:api'],function(){
 
         Route::get('/getAttendanceByClass','admin\AdminController@getAttendance');
 
+        Route::get('/checkAttendance','admin\AdminController@checkAttendance');
 
+        
         Route::post('/addTeacher','admin\AdminController@teacherRegister');
 
         Route::get('/getAllTeachers','admin\AdminController@getTeachers');  
 
         Route::get('/removeTeacher','admin\AdminController@removeTeacher');  
 
+        Route::post('/studentAttendance','admin\AdminController@markAttendance');  
+        
         
         Route::get('/logout','admin\AdminController@logout');
 

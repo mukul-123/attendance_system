@@ -274,12 +274,53 @@ class AdminController extends Controller
                       // to get the attendance of students of particular class...
                       case 'getStudentAttendance':
                       $attendance=Student::select('id','name','email','grade_id')->where(['grade_id'=>$class_id,'verify'=>'1'])
-                      ->withCount('attendance')->with('class')->paginate(5);
+                      ->withCount(['attendance'=>function($q){
+                            $q->where('availability','1');
+                      }])->with('class')->paginate(5);
+                     //  print_r($attendance->toArray());
                       $response=['status'=>200,'message'=>'Attendance Fetch successfully','data'=>$attendance];
                       break;    
                }
                return response($response,200);
-            
+        }
+
+        /*
+        * Function to check the attendance of students marked...
+        */
+        public function checkAttendance(Request $request){
+              $id=$request->id;
+             $data=Attendance::where(['grade_id'=>$id])->first();
+             if(!empty($data)){
+              $date=strtotime($data['created_at']);
+              $today=strtotime(now());
+              $diff=$date-$today;
+              // echo $diff;
+              if($diff<86400){
+              $response=['status'=>200,'marked'=>true,'message'=>'Attendance already marked for '.date('d-m-Y')];
+              }
+              else{
+                     $response=['status'=>200,'marked'=>false];
+              }
+             } else{
+              $response=['status'=>200,'marked'=>false];    
+             }
+             return response($response,200);
+        }
+
+        /*
+        * Function to mark student attendance...
+        */
+        public function markAttendance(Request $request){
+               $response=[];
+               $req_data=$request->all();
+              $insert=Attendance::insert($req_data);
+              if($insert){
+                     $response=['status'=>200,'message'=>'Attendance marked successfully'];
+              }
+              else{
+                     $response=['status'=>500,'message'=>'Internal server error'];      
+              }
+              return response($response);
         }
         /*
          * function to logout...

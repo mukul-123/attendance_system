@@ -81,17 +81,19 @@ export class StudentAttendanceComponent implements OnInit {
   }
 
   giveAttendance() {
-    // console.log(this.clas_id);
-
-    // .result.then(
-    //   // closed reason after button click
-    //   result => {
-    //   },
-    //   // closed reason when modal closes by closed icon
-    //   reason => {}
-    // )
-    this.modalService.open(AttendanceModalComponent, {
-      ariaLabelledBy: "modal-basic-title"
-    }).componentInstance.id = this.clas_id;
+    const param={id:this.clas_id};
+    this.commonService.getRequestWithParameters("admin/checkAttendance",param).subscribe(res=>{
+      if(res.status===200 && res.marked===false){
+        this.modalService.open(AttendanceModalComponent, {
+          ariaLabelledBy: "modal-basic-title"
+        }).componentInstance.id = this.clas_id;
+      }
+      else{
+        this.spinnerService.errorSwal(res);
+      }
+    },error=>{
+      this.spinnerService.errorSwal(error);
+    })
+   
   }
 }

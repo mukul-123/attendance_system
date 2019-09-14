@@ -16,4 +16,8 @@ class Grade extends Model
     public function class(){
         return $this->hasOne('App\model\Teacher');
     }
+
+    public function attendances(){
+        return $this->hasMany('App\model\Attendance');
+    }
 }

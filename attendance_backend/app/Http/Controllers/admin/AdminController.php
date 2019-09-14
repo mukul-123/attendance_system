@@ -24,6 +24,7 @@ use App\model\Grade;
 use App\model\Student;
 use App\model\Attendance;
 use Mail;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -47,6 +48,36 @@ class AdminController extends Controller
               }
        }
 
+       /*
+       * function to view data of admin dashboard... 
+       */
+       public function dashboard(Request $request){
+              $user=Auth::user();
+              $total_teachers=count(Teacher::all());
+              $unverified_teacher=count(Teacher::where('verify','0')->get());
+              $verified_teacher=count(Teacher::where('verify','1')->get());
+
+              $total_student=count(Student::all());
+              $unverified_student=count(Student::where('verify','0')->get());
+              $verified_student=count(Student::where('verify','1')->get());
+
+              $grades=count(Grade::all());
+
+              $carbon=Carbon::now();
+              $first_day=$carbon->firstOfMonth();
+  
+              $grade_attendance=Grade::select('name as label')->withCount(['attendances as y'=>function($q)use($first_day){
+                     $q->where('availability','1')->whereBetween('created_at',[$first_day,now()]);
+              }])->get()->toArray();
+
+              $response=['status'=>200,'message'=>'data fetched successfully','data'=>['grade_attendance'=>$grade_attendance,
+              'teachers'=>$total_teachers,'verified_teacher'=>$verified_teacher,
+              'unverified_teacher'=>$unverified_teacher,'student'=>$total_student,
+              'verified_student'=>$verified_student,'unverified_student'=>$unverified_student,'classes'=>$grades]];
+
+              return response($response,200);
+       }
+       
        /*
        * function to get the logged in user profile... 
        */
@@ -292,9 +323,11 @@ class AdminController extends Controller
              $data=Attendance::where(['grade_id'=>$id])->first();
              if(!empty($data)){
               $date=strtotime($data['created_at']);
+              // echo $date."<br>";
               $today=strtotime(now());
-              $diff=$date-$today;
-              // echo $diff;
+              // echo $today."<br>";
+              $diff=$today-$date;
+              // echo $diff."<br>";
               if($diff<86400){
               $response=['status'=>200,'marked'=>true,'message'=>'Attendance already marked for '.date('d-m-Y')];
               }

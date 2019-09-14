@@ -1,1 +1,39 @@
 <app-admin-header></app-admin-header>
+
+<div  id="chartContainer" class="chart"></div>
+
+<div class="card_container">
+<mat-card style="width:300px;margin-left:100px">
+            <mat-card-header [style.backgroundColor]="'#75DAFF'" style="height:150px"> 
+                  <img mat-card-avatar src="https://p7.hiclipart.com/preview/129/94/328/computer-icons-avatar-icon-design-male-teacher.jpg" alt="User Avatar">
+
+      <mat-card-title>Teachers</mat-card-title>
+      <mat-card-subtitle>{{data.teachers}} Total Teachers</mat-card-subtitle>
+      <mat-card-subtitle>{{data.verified_teacher}} Verified</mat-card-subtitle>
+      <mat-card-subtitle>{{data.unverified_teacher}} unverified</mat-card-subtitle>
+      <!-- <mat-card-actions><button>View Teachers</button></mat-card-actions> -->
+</mat-card-header>
+  </mat-card>
+
+  <mat-card style="width:300px;margin-left:100px">
+      <mat-card-header [style.backgroundColor]="'#228B22'" style="height:150px"> 
+            <img mat-card-avatar src="https://p7.hiclipart.com/preview/129/94/328/computer-icons-avatar-icon-design-male-teacher.jpg" alt="User Avatar">
+
+<mat-card-title>Students</mat-card-title>
+<mat-card-subtitle>{{data.student}} Total Students</mat-card-subtitle>
+<mat-card-subtitle>{{data.verified_student}} Verified</mat-card-subtitle>
+<mat-card-subtitle>{{data.unverified_student}} unverified</mat-card-subtitle>
+</mat-card-header>
+</mat-card>
+
+<mat-card style="width:300px;margin-left:100px">
+      <mat-card-header [style.backgroundColor]="'#FFFF33'" style="height:150px"> 
+            <img mat-card-avatar src="https://p7.hiclipart.com/preview/129/94/328/computer-icons-avatar-icon-design-male-teacher.jpg" alt="User Avatar">
+
+<mat-card-title>Classes</mat-card-title>
+<mat-card-subtitle>{{data.classes}}</mat-card-subtitle>
+<mat-card-subtitle>Total Classes</mat-card-subtitle>
+</mat-card-header>
+</mat-card>
+
+</div>

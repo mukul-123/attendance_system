@@ -13,11 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-    
-//     return $request->user();
-// });
-
 Route::prefix('/admin')->group(function(){
 
     Route::post('/login','admin\AdminController@login');
@@ -30,8 +25,12 @@ Route::prefix('/teacher')->group(function(){
 
 Route::group(['middleware'=>'auth:api'],function(){
 
+
     Route::prefix('/admin')->group(function(){
 
+        
+        Route::get('/dashboard','admin\AdminController@dashboard');
+        
         Route::get('/profile','admin\AdminController@profile');
 
         Route::post('/addClass','admin\AdminController@addClass');

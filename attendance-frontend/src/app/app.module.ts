@@ -6,6 +6,7 @@ import { HttpModule, Headers, RequestOptions } from "@angular/http";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import {NgxPaginationModule} from 'ngx-pagination';
+import {MatCardModule} from '@angular/material';
 
 import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
@@ -29,6 +30,7 @@ import { TeacherDashboardComponent } from './views/teacher/teacher-dashboard/tea
 import { AdminProfileComponent } from './views/admin-profile/admin-profile.component';
 import { StudentAttendanceComponent } from './views/student-attendance/student-attendance.component';
 import { AttendanceModalComponent } from './modal/attendance-modal/attendance-modal.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -55,10 +57,12 @@ import { AttendanceModalComponent } from './modal/attendance-modal/attendance-mo
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
+    MatCardModule,
     NgxPaginationModule,
     RouterModule.forRoot(routes),
     NgbModule.forRoot(),
-    NgMultiSelectDropDownModule.forRoot()
+    NgMultiSelectDropDownModule.forRoot(),
+    BrowserAnimationsModule
   ],
   entryComponents: [
     ClassModalComponent,

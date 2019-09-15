@@ -1,6 +1,9 @@
 
 <div class="header">
-  <a class="logo">{{user.name | uppercase}}</a>
+    <img src="{{user.image}}" width="50px" height="50px" alt="User Image" style="float:right">
+
+  <a class="logo">{{user.name | uppercase}}</a>&nbsp;&nbsp;&nbsp;
+
   <div class="header-right">
     <a class="active" (click)="logout()">Logout</a>
     <a routerLink="/admin/attendance">Attendance</a>

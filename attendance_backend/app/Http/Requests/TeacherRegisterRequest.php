@@ -58,7 +58,7 @@ class TeacherRegisterRequest extends FormRequest
         'age.numeric'=>'Invalid age',
         'mob_no.required'=>'Mobile number is required',
         'mob_no.numeric'=>'Invalid mobile number'
-        ]
+        ];
     }
 
     public function failedValidation(Validator $validator) {

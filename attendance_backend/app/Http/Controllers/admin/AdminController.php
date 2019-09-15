@@ -12,12 +12,15 @@ use App\Http\Requests\ClassRequest;
 use App\Http\Requests\TeacherRegisterRequest;
 // student verification request 
 use App\Http\Requests\StudentVerificationRequest;
+// update profile request 
+use App\Http\Requests\UpdateProfileRequest;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 
 use App\model\Teacher;
 use App\model\Grade;
@@ -25,6 +28,8 @@ use App\model\Student;
 use App\model\Attendance;
 use Mail;
 use Carbon\Carbon;
+use Image;
+use File;
 
 class AdminController extends Controller
 {
@@ -52,7 +57,11 @@ class AdminController extends Controller
        * function to view data of admin dashboard... 
        */
        public function dashboard(Request $request){
+              $teacher_img = asset('storage/images/female_teacher.jpg');
+                     // echo $teacher_img;
               $user=Auth::user();
+              // echo $teachers->image;
+              
               $total_teachers=count(Teacher::all());
               $unverified_teacher=count(Teacher::where('verify','0')->get());
               $verified_teacher=count(Teacher::where('verify','1')->get());
@@ -71,8 +80,8 @@ class AdminController extends Controller
               }])->get()->toArray();
 
               $response=['status'=>200,'message'=>'data fetched successfully','data'=>['grade_attendance'=>$grade_attendance,
-              'teachers'=>$total_teachers,'verified_teacher'=>$verified_teacher,
-              'unverified_teacher'=>$unverified_teacher,'student'=>$total_student,
+              'teachers'=>$total_teachers,'verified_teacher'=>$verified_teacher,'image'=>$teacher_img,
+              'user_img'=>$user->image,'unverified_teacher'=>$unverified_teacher,'student'=>$total_student,
               'verified_student'=>$verified_student,'unverified_student'=>$unverified_student,'classes'=>$grades]];
 
               return response($response,200);
@@ -84,9 +93,60 @@ class AdminController extends Controller
        public function profile(Request $request){
               $req=$request->all();
               $user=Auth::user();
-              $response=['status'=>200,'message'=>'User fetched successfully','data'=>$user];
+
+              $user_data=['id'=>$user->id,'name'=>$user->name,'email'=>$user->email,'image'=>$user->image];
+
+              $response=['status'=>200,'message'=>'User fetched successfully','data'=>$user_data];
               return response($response,200);
        }
+
+       public function updateProfile(UpdateProfileRequest $request){
+
+              $req=$request->all();
+
+              try{
+              if ($request->userImage)
+              {
+                     $request->validate([
+
+                            'userImage' => 'image|mimes:jpeg,png,jpg|max:2048',
+                
+                        ]);
+
+                     $image = $request->userImage;
+                     // echo $image;
+                     $pre_image=Teacher::select('image')->where('id',$req['id'])->first();
+
+                     unlink(public_path('storage/images/'.$pre_image->getOriginal('image')));
+
+    
+                     $photoName = time().'.'.$request->userImage->getClientOriginalExtension();
+
+                            $destination_path=public_path('storage/images').'/'.$photoName;
+
+                     $img = Image::make($image->getRealPath());
+                    $save= $img->resize(200, 200, function ($constraint) use($destination_path){
+                               $constraint->aspectRatio();
+                           })->save($destination_path);
+
+                     Teacher::where('id',$req['id'])->update(['name'=>$req['name'],
+                     'email'=>$req['email'],'image'=>$photoName]);
+                     
+                     $teacher_img=Teacher::select('image')->where('id',$req['id'])->first();
+
+                           $response=['status'=>200,'message'=>'Profile updated successfully','image'=>$teacher_img->image];
+                           return response($response,200);
+              }
+              else{
+                     Teacher::where('id',$req['id'])->update(['name'=>$req['name'],'email'=>$req['email']]);
+                     return response($response,200);
+
+              }
+       }
+                           catch(Exception $e){
+                            return response($e->getMessage(),422);
+                           }
+              }
 
        /*
        * function to add the class by the admin... 

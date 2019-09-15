@@ -32,6 +32,7 @@ export class AdminLoginComponent implements OnInit {
               name: res.data.name,
               type: res.data.type,
               id:res.data.id,
+              image:res.data.image
             });
             localStorage.setItem("user", user_data);
             localStorage.setItem("token",res.authorization);

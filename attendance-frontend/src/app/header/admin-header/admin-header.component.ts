@@ -19,7 +19,7 @@ export class AdminHeaderComponent implements OnInit {
    
   ) {}
 
-  user: Object;
+  user: Object={};
 
   ngOnInit() {
     var user_data = localStorage.getItem("user");

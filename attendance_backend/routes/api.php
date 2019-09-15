@@ -33,6 +33,8 @@ Route::group(['middleware'=>'auth:api'],function(){
         
         Route::get('/profile','admin\AdminController@profile');
 
+        Route::post('/updateProfile','admin\AdminController@updateProfile');
+
         Route::post('/addClass','admin\AdminController@addClass');
 
         Route::get('/classes','admin\AdminController@getClasses');

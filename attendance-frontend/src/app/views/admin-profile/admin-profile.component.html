@@ -1,4 +1,58 @@
 <app-admin-header></app-admin-header>
-<p>
-  admin-profile works!
-</p>
+
+<div>
+<img src="{{data.image}}" id="image" style="float:left" width="200px" height="200px"><br>
+<input type="file" [(ngModel)]="data.pic" name="image" (change)="userImage($event)">
+</div>
+<br>
+
+<span style="margin-left: 300px">
+<label>Name:</label>
+<b><a> {{data.name | uppercase}}</a></b>
+</span>
+<br>
+
+<span style="margin-left: 300px">
+    <label>Email:</label>
+    <a> {{data.email | uppercase}}</a>&nbsp;&nbsp;&nbsp;&nbsp;<small>Administrator</small>
+</span>
+<br><br><br><br><br>
+
+<div  class="container">
+    <h2>Account</h2>
+
+    <form name="profile" (ngSubmit)='profile.form.valid && updateProfile()' #profile="ngForm">
+
+        <div class="row">
+        <div class="col-md-6">
+            <label>Name</label>  
+    </div>
+    <div class="col-md-3 col-md-offset-2">
+        <input type="text" class="form-control" name="name" #name="ngModel" [(ngModel)]="data.name" required> 
+          <div *ngIf="profile.submitted && name.invalid">
+              <div class="errors" *ngIf="name.errors.required">Please enter your name</div>
+          </div>
+    </div>
+    </div>
+            <br>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Email</label>  
+            </div>
+            <div class="col-md-3 col-md-offset-6">
+                <input type="email" class="form-control" name="email" #email="ngModel" [(ngModel)]="data.email" required email> 
+                  <div *ngIf="profile.submitted && email.invalid">
+                      <div class="errors" *ngIf="email.errors.required">Please enter your name</div>
+                      <div class="errors" *ngIf="email.errors.email">Please enter your name</div>
+                  </div>
+            </div>
+            </div>
+                    <br>
+<button type="submit" class="btn btn-success">Update</button>
+    
+</form>
+</div>
+
+
+

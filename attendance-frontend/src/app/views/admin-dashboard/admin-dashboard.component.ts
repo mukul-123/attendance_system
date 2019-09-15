@@ -20,6 +20,7 @@ export class AdminDashboardComponent implements OnInit {
   data={};
 
   ngOnInit() {
+    this.spinnerService.showSpinner();
     this.adminDashboard();
   }
 
@@ -45,6 +46,7 @@ export class AdminDashboardComponent implements OnInit {
                this.grade_attendance=res.data.grade_attendance;
                this.viewChart();
                this.data=res.data;
+               this.spinnerService.hideSpinner();
               } else {
                 console.log("Internal server error");
               }
